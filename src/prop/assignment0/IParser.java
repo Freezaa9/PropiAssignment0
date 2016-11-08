@@ -1,7 +1,5 @@
 package prop.assignment0;
 
-import prop.assignment0.ParserException;
-import prop.assignment0.TokenizerException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
