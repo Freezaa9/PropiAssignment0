@@ -1,5 +1,6 @@
 package prop.assignment0;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
@@ -19,15 +20,18 @@ public class Scanner implements IScanner {
 	public Scanner() {
 	}
 	
+        @Override
 	public void open(String fileName) throws FileNotFoundException {
 		stream = new FileInputStream(fileName);
 		reader = new InputStreamReader(stream);
 	}
 		
+        @Override
 	public char current() {
 		return current;
 	}
 	
+        @Override
 	public void moveNext() throws IOException {
 		if (reader == null)
 			throw new IOException("No open file.");
@@ -35,6 +39,7 @@ public class Scanner implements IScanner {
 			current = (char)reader.read();
 	}
 	
+        @Override
 	public void close() throws IOException {
 		if (reader != null)
 			reader.close();

@@ -11,113 +11,142 @@ package prop.assignment0;
  */
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
 
-public class Tokenizer {
+public class Tokenizer implements ITokenizer {
 
-    private static Map<Character, Token> symbols = null;
+    private List<Lexeme> listLexeme;
 
     private Scanner scanner = null;
     private Lexeme current = null;
     private Lexeme next = null;
 
     public Tokenizer() {
-	symbols = new HashMap<Character, Token>();
-	symbols.put('.', Token.STOP);
-	symbols.put(Scanner.EOF, Token.EOF);
+        listLexeme = new ArrayList<>();
     }
 
     /**
      * Opens a file for tokenizing.
+     *
+     * @param fileName
+     * @throws java.io.IOException
+     * @throws prop.assignment0.TokenizerException
      */
-    void open(String fileName) throws IOException, TokenizerException {
-	scanner = new Scanner();
-	scanner.open(fileName);
-	scanner.moveNext();
-	next = extractLexeme();		
+    @Override
+    public void open(String fileName) throws IOException, TokenizerException {
+        scanner = new Scanner();
+        scanner.open(fileName);
+        while (next == null || next.token() != Token.EOF) {
+            listLexeme.add(next);
+            scanner.moveNext();
+            next = extractLexeme();
+        }
+        int i = 1;
     }
-	
+
     /**
      * Returns the current token in the stream.
+     *
+     * @return
      */
-    Lexeme current(){
-	return current;
+    @Override
+    public Lexeme current() {
+        return current;
     }
 
     /**
      * Moves current to the next token in the stream.
+     *
+     * @throws java.io.IOException
+     * @throws prop.assignment0.TokenizerException
      */
-    void moveNext() throws IOException, TokenizerException {
-	if (scanner == null)
-	    throw new IOException("No open file.");
-	current = next;
-	if (next.token() != Token.EOF)
-	    next = extractLexeme();
+    @Override
+    public void moveNext() throws IOException, TokenizerException {
+        if (scanner == null) {
+            throw new IOException("No open file.");
+        }
+        current = next;
+        //if (next.token() != Token.EOF) {
+
+        next = extractLexeme();
+        //}
     }
 
     private void consumeWhiteSpaces() throws IOException {
-	while (Character.isWhitespace(scanner.current())){
-	    scanner.moveNext();
-	}
+        while (Character.isWhitespace(scanner.current())) {
+            scanner.moveNext();
+        }
     }
 
     private Lexeme extractLexeme() throws IOException, TokenizerException {
-	consumeWhiteSpaces();
-	Character ch = scanner.current();
-	if (ch == Scanner.EOF)
-	    return new Lexeme(ch, Token.EOF);
-	else if (Character.isLetter(ch))
-	    if (ch == 'a' || ch == 't'){
-		return extractDeterminer();
-	    } else if (ch == 'c' || ch == 'm') {
-		return extractNoun();
-	    } else if (ch == 'h' || ch == 's') {
-		return extractVerb();
-	    } else throw new TokenizerException("Unknown character: " + String.valueOf(ch)); 
-	else if (symbols.containsKey(ch)) {
-	    scanner.moveNext();
-	    return new Lexeme(ch, symbols.get(ch));
-	}
-	else
-	    throw new TokenizerException("Unknown character: " + String.valueOf(ch));
-	}
-
-    private Lexeme extractDeterminer() throws IOException {
-	StringBuilder strBuilder = new StringBuilder();
-	while (Character.isLetter(scanner.current())) {
-	    strBuilder.append(scanner.current());
-	    scanner.moveNext();
-	}
-	return new Lexeme(strBuilder.toString(), Token.DETERMINER);
+        consumeWhiteSpaces();
+        Character ch = scanner.current();
+        if (ch == Scanner.EOF) {
+            return new Lexeme(ch, Token.EOF);
+        } else {
+            return analyse(ch);
+        }
     }
 
-    private Lexeme extractNoun() throws IOException {
-	StringBuilder strBuilder = new StringBuilder();
-	while (Character.isLetter(scanner.current())) {
-	    strBuilder.append(scanner.current());
-	    scanner.moveNext();
-	}
-	return new Lexeme(strBuilder.toString(), Token.NOUN);
-    }
+    private Lexeme analyse(char ch) {
+        Token token;
+        switch (ch) {
+            case '(':
+                token = Token.LEFT_PAREN;
+                break;
+            case ')':
+                token = Token.RIGHT_PAREN;
+                break;
+            case '+':
+                token = Token.ADD_OP;
+                break;
+            case '-':
+                token = Token.SUB_OP;
+                break;
+            case '*':
+                token = Token.MULT_OP;
+                break;
+            case '/':
+                token = Token.DIV_OP;
+                break;
+            case '=':
+                token = Token.ASSIGN_OP;
+                break;
+            case ';':
+                token = Token.SEMICOLON;
+                break;
+            case '{':
+                token = Token.LEFT_CURLY;
+                break;
+            case '}':
+                token = Token.RIGHT_CURLY;
+                break;
+            default:
+                token = Token.EOF;
+                if (Character.isLetter(ch)) {
+                    token = Token.IDENT;
+                }
+                if (Character.isDigit(ch)) {
+                    token = Token.INT_LIT;
+                }
 
-    private Lexeme extractVerb() throws IOException {
-	StringBuilder strBuilder = new StringBuilder();
-	while (Character.isLetter(scanner.current())) {
-	    strBuilder.append(scanner.current());
-	    scanner.moveNext();
-	}
-	return new Lexeme(strBuilder.toString(), Token.VERB);
+        }
+        return new Lexeme(ch, token);
     }
 
     /**
      * Closes the file and releases any system resources associated with it.
+     *
+     * @throws java.io.IOException
      */
+    @Override
     public void close() throws IOException {
-		if (scanner != null)
-			scanner.close();
+        if (scanner != null) {
+            scanner.close();
+        }
     }
 
 }
-
-

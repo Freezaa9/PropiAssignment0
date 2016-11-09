@@ -5,8 +5,10 @@ import java.io.OutputStreamWriter;
 
 public class Program {
 	public static void main(String[] args) {
-		String inputFileName = null;
+            	String inputFileName = null;
 		String outputFileName = null;
+//		String inputFileName = "program0.txt";
+//		String outputFileName = "test.txt";
 		IParser parser = null;
 		INode root = null; // Root of the parse tree.
 		StringBuilder builder = null;
@@ -32,6 +34,9 @@ public class Program {
 				stream = new FileOutputStream(outputFileName);
 				writer = new OutputStreamWriter(stream);
 				writer.write(builder.toString());
+                                ////////////////
+                                
+                                ///////////////
 			}
 			catch (Exception exception) {
 				System.out.println("EXCEPTION: " + exception);
