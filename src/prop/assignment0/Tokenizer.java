@@ -62,11 +62,12 @@ public class Tokenizer implements ITokenizer {
         if (scanner == null) {
             throw new IOException("No open file.");
         }
-        while (next == null || next.token() != Token.EOF) {
-            listLexeme.add(next);
+        while (next == null || next.token() != Token.EOF) {         
             scanner.moveNext();
             next = extractLexeme();
+            listLexeme.add(next);
         }
+        listLexeme.toString();
     }
 
     private void consumeWhiteSpaces() throws IOException {
