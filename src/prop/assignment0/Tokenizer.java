@@ -38,13 +38,7 @@ public class Tokenizer implements ITokenizer {
     @Override
     public void open(String fileName) throws IOException, TokenizerException {
         scanner = new Scanner();
-        scanner.open(fileName);
-        while (next == null || next.token() != Token.EOF) {
-            listLexeme.add(next);
-            scanner.moveNext();
-            next = extractLexeme();
-        }
-        int i = 1;
+        scanner.open(fileName);       
     }
 
     /**
@@ -68,11 +62,11 @@ public class Tokenizer implements ITokenizer {
         if (scanner == null) {
             throw new IOException("No open file.");
         }
-        current = next;
-        //if (next.token() != Token.EOF) {
-
-        next = extractLexeme();
-        //}
+        while (next == null || next.token() != Token.EOF) {
+            listLexeme.add(next);
+            scanner.moveNext();
+            next = extractLexeme();
+        }
     }
 
     private void consumeWhiteSpaces() throws IOException {

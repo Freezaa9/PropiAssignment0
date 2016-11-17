@@ -10,7 +10,7 @@ class Parser implements IParser{
     public void open(String fileName) throws IOException, TokenizerException {
 	t = new Tokenizer();			
 	t.open(fileName);
-	//t.moveNext();
+	t.moveNext();
     }
 
     @Override
