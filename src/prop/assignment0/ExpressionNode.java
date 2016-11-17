@@ -14,8 +14,10 @@ public class ExpressionNode implements INode {
     	private TermNode term;
 	private enum op{ADD_OP,SUB_OP};
         private ExpressionNode expr;
-	public ExpressionNode() {
-
+	public ExpressionNode(TermNode term, enum op, ExpressionNode expr) {
+            this.term=term;
+            this.op=op;
+            this.expr=expr;
 		//System.out.println("Lexeme:" + value + " " + token);
 	}
     @Override

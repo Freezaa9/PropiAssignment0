@@ -10,12 +10,14 @@ package prop.assignment0;
  * @author Geoffrey-Port
  */
 public class TermNode implements INode {
-    	private FactorNode factore;
+    	private FactorNode factor;
 	private enum op{MULT_OP,DIV_OP};
         private TermNode term;
 
-    public TermNode() {
-
+    public TermNode(FactorNode factore, enum op, TermNode term) {
+        this.factor=factor;
+        this.op=op;
+        this.term = term;
 		//System.out.println("Lexeme:" + value + " " + token);
     }
     @Override

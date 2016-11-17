@@ -13,8 +13,9 @@ public class FactorNode implements INode {
     	private float intt;	
         private ExpressionNode expr;
 
-	public FactorNode() {
-
+	public FactorNode(float intt, ExpressionNode expr) {
+            this.intt = intt;
+            this.expr=expr;
 		//System.out.println("Lexeme:" + value + " " + token);
 	}
     @Override

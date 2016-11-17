@@ -12,11 +12,12 @@ package prop.assignment0;
 
 public class AssignmentNode implements INode {
     	private char ident;
-	private char assignOp;
+	private final char assignOp ='=';
         private ExpressionNode expr;
 
-	public AssignmentNode() {
-
+	public AssignmentNode(char ident, ExpressionNode expr) {
+            this.ident = ident;
+            this.expr=expr;
 		//System.out.println("Lexeme:" + value + " " + token);
 	}
     @Override
