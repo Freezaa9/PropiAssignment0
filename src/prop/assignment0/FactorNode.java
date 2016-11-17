@@ -10,8 +10,7 @@ package prop.assignment0;
  * @author Geoffrey-Port
  */
 public class FactorNode implements INode {
-    	private char ident;
-	private char assignOp;
+    	private float intt;	
         private ExpressionNode expr;
 
 	public FactorNode() {

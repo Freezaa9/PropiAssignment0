@@ -9,11 +9,11 @@ package prop.assignment0;
  *
  * @author Geoffrey-Port
  */
-public class ExpressionNode implements INode {
-    	private char ident;
-	private char assignOp;
-        private ExpressionNode expr;
 
+public class ExpressionNode implements INode {
+    	private TermNode term;
+	private enum op{ADD_OP,SUB_OP};
+        private ExpressionNode expr;
 	public ExpressionNode() {
 
 		//System.out.println("Lexeme:" + value + " " + token);
@@ -27,5 +27,5 @@ public class ExpressionNode implements INode {
     public void buildString(StringBuilder builder, int tabs) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }

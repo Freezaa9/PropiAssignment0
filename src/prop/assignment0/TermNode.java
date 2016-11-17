@@ -10,9 +10,9 @@ package prop.assignment0;
  * @author Geoffrey-Port
  */
 public class TermNode implements INode {
-    	private char ident;
-	private char assignOp;
-        private ExpressionNode expr;
+    	private FactorNode factore;
+	private enum op{MULT_OP,DIV_OP};
+        private TermNode term;
 
     public TermNode() {
 
