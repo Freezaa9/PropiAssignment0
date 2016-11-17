@@ -18,7 +18,7 @@ class Parser implements IParser{
 	    if (t == null)
 		throw new IOException("No open file.");
 
-	    return null;//new TextNode(t);	
+	    return new AssignmentNode(t);	
             
 	}
 
