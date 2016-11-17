@@ -19,15 +19,20 @@ import java.util.List;
 public class Tokenizer implements ITokenizer {
 
     private List<Lexeme> listLexeme;
-
     private Scanner scanner = null;
     private Lexeme current = null;
     private Lexeme next = null;
 
+
+
     public Tokenizer() {
         listLexeme = new ArrayList<>();
     }
-
+    
+        public List<Lexeme> getListLexeme() {
+        return listLexeme;
+    }
+    
     /**
      * Opens a file for tokenizing.
      *
